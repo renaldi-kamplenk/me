@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <title>Kirim Pesan ke Renaldi</title>
+  </head>
+  <body>
+
+    <h1 class="display-1 fst-italic"> Kirim Pesan ke Renaldi </h1>
+    <br>
+    <h2 class="fw-bold"> Pendahuluan </h2>
+    <h4> Anu apakoh? </h4>
+    <p> Neng situs kie ko bisa ngirim aku pesan, tapi tanpa nomer, tanpa nama, tanpa kontak. Mung gari maring website kie, terus ko kirim apa sing pengin disampaikan maring aku. </p>
+    <h4> Namane kosong rapapa? </h4>
+    <p> Namane kosong rapapa, tapi nekan penting usahakna bruki nama karo kontak sing bisa dihubungi. </p>
+    <h4> Udu pishing kan? </h4>
+    <p> Yaudu lah jancok, ujar-ujare aku apa anjrit. Melas lah akun game kan anu hobi, juga nyolong kan ora apik. </p>
+    <br>
+
+    <h2 class="fw-bold"> Pesan </h2>
+    <div class="alert alert-success alert-dismissible fade show d-none my-alert" role="alert">
+      <strong>Sip suwun!</strong> pesane ko wis tek tampani neng aku.
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <h4> Nama </h4>
+    <p> Monggo sampean isi namane neng kene, kosongan ya rapapa, tapi aja berharap dibales nekan kosongan. </p>
+    <form name="submit-to-google-sheet">
+      <input name="nama" type="text" class="form-control" placeholder="Nama (boleh kosong).">
+      <br>
+      <br>
+    <h4> Isi Pesan Sing Pengin Dikirim </h4>
+    <p> Nah neng kene rika nulis pesan apa sing pengin dikirim, nekan penting banget sertakan nomer hp, wa, email, utawa fb sing bisa dihubungi balik. </p>
+      <div class="form-group">
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="pesan" placeholder="Contoh: Ren, kie aku kesaten neng karanglewas, kie nomere aku, 08xxx"></textarea>
+      </div>
+      <br>
+    <p> Nah nekan uwis rampung, gari pencet kirim. </p>
+    <button class="btn btn-primary btn-kirim" type="submit">Kirim!</button>
+    <button class="btn btn-primary btn-loading d-none" type="button" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Sit dela enteni bro..
+    </button>
+    </form>
+    <br>
+
+    <script>
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbywA5yjLW1_RYA98B8WpaMlwHvgBPLnULmHIjEkO22iUn_DUgetJpqZ_srUFf_vNS-d6Q/exec'
+      const form = document.forms['submit-to-google-sheet']
+      const btnKirim = document.querySelector('.btn-kirim');
+      const btnLoading = document.querySelector('.btn-loading');
+      const myAlert = document.querySelector('.my-alert');
+    
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+	btnLoading.classList.toggle('d-none');
+	btnKirim.classList.toggle('d-none');
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+	  .then(response => {
+	      btnLoading.classList.toggle('d-none');
+	      btnKirim.classList.toggle('d-none');
+	      myAlert.classList.toggle('d-none');
+	      form.reset();
+	      console.log('Success!', response)
+	      })
+          .catch(error => console.error('Error!', error.message))
+      })
+    </script>
+    
+
+    <!-- Bootstrap JavaScript -->
+    <script src="js/bootstrap.js"></script>
+    <script src="js/popper.min.js"></script>
+
+  </body>
+</html>
+
